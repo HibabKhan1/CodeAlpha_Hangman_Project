@@ -4,7 +4,7 @@
 ## Overview
 CodeAlpha_Hangman_Project is a fun and interactive word guessing game developed using Python and Tkinter. The game challenges players to guess the hidden word by suggesting letters within a limited number of attempts. It features different difficulty levels and categories to keep players engaged.
 
-## Features
+## Features 
 - Multiple difficulty levels: Easy, Medium, Hard
 - Categorized words: Programming Languages, Games
 - Hint system to assist players
