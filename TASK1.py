@@ -94,11 +94,12 @@ def setup_gui():
         elapsed_time = time.time() - start_time
         time_left_label.config(text=f"Time left: {int(time_limit - elapsed_time)} seconds")
 
-    def check_guess():
-        global incorrect_guesses, full_word_guessed
-        guess = guess_entry.get().lower()
-        guess_entry.delete(0, tk.END)
-        
+    def check_guess(guess=None):
+        global incorrect_guesses, full_word_guessed,hint_used
+        if not guess:
+            guess = guess_entry.get().lower()
+            guess_entry.delete(0, tk.END)
+
         if time.time() - start_time > time_limit:
             end_game(False, "Time's up! You didn't guess the word in time.")
             return
@@ -109,11 +110,13 @@ def setup_gui():
                 hint_used = True
             else:
                 messagebox.showinfo("Hint", "You've already used your hint!")
+            return
+
+        if guess in guessed_letters:
+            messagebox.showinfo("Info", "You've already guessed that letter!")
         elif guess == word:
             full_word_guessed = True
             end_game(True, f"Congratulations! You guessed the word '{word}'!")
-        elif guess in guessed_letters:
-            messagebox.showinfo("Info", "You've already guessed that letter!")
         elif guess in word:
             guessed_letters.add(guess)
             if check_all_letters_guessed(word, guessed_letters):
@@ -128,7 +131,6 @@ def setup_gui():
             else:
                 messagebox.showinfo("Info", f"Incorrect guess! You have {max_incorrect_guesses - incorrect_guesses} guesses left.")
                 update_display()
-
     def end_game(won, message):
         global guessed_letters, incorrect_guesses, full_word_guessed, start_time
         if won:
